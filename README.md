@@ -3,6 +3,66 @@ Redux adalah pustaka JavaScript open-source untuk mengelola state aplikasi. Sebe
 ## Kosnsep Redux
 Redux memiliki konsep yaitu state yang berada di setiap komponen akan dimasukkan ke dalam store menjadi satu. tinggal semua state yang didalam store akan dipanggil kembali ke setiap komponen-komponen yang memerlukan state tersebut.
 ## ![redux](https://user-images.githubusercontent.com/52732798/69915451-8d2b8e00-1481-11ea-986a-0ba681ef8299.png) 
+jadi direduc memiliki beberapa component diantarannya
++ action
+konsep action cukup Sederhana jadi action merupakan sebuah object yang memiliki property type. yang dimana object action ini nantinya akan dikirim ke Store dengan cara store.dispatch(ADD_DATA) , untuk kemudian nanti di olah oleh Reducer.
+```
+const changeUsername = {
+    type: 'CHANGE_USERNAME',
+    data: 'Pondok It'
+}
+```
+untuk nama property nya bebas tapi kalo untuk type gak boleh diganti.
+
++ Store
+Store memegang seluruh state pada aplikasi Anda. Satu-satunya cara untuk mengubah keadaan di dalamnya adalah dengan mengirimkan tindakan padanya. Store bukan kelas. Ini hanya sebuah objek dengan beberapa metode di atasnya. 
+Sangat mudah untuk membuat store jika Anda memiliki reducer. Di bagian sebelumnya, kami menggunakan combineReducers() untuk menggabungkan beberapa reducers menjadi satu.
+
+```
+//applyMiddleware untuk memperluas Redux dengan fungsionalitas khusus
+//redux thunk untuk mengambil atau menyimpan data
+const store={createStore(Reducer,{},applyMiddleware(Thunk))}
+```
+
+jadi fungsi applyMiddleware(Thunk) untuk memperluar pengambilan dan penyimpanan data 
+
++ reducer
+Reducer menentukan bagaimana keadaan aplikasi berubah sebagai response terhadap actions yang dikirim ke store. Ingatlah bahwa actions hanya menggambarkan apa yang terjadi, tetapi jangan menggambarkan bagaimana keadaan aplikasi berubah.
+
+```
+import { combineReducers } from 'redux'
+// import bisa di tambah dan juga diubah menurut types
+import { CHANGE_NAME, CHANGE_UMUR, CHANGE_ALAMAT } from '../types/index'
+ 
+ 
+//membuat state
+const initialState = {
+  name: '',
+  umur: '',
+  alamat: ''
+}
+ 
+//dibawah ini cuman manajement state
+export const HomeReducer = (state = initialState, action) => {  
+//membuat kondisi jika type sesuai dengan action.type yang telah kita buat difolder action maka akan mengembalikan action.payload / statenya itu sendiri
+  switch (action.type) {
+    case CHANGE_NAME:
+      return { ...state, name: action.payload }
+    case CHANGE_UMUR:
+      return { ...state, umur: action.payload }
+    case CHANGE_ALAMAT:
+      return { ...state, alamat: action.payload }
+    default:
+      return state
+  }
+}
+ 
+// supaya reducer bisa digunakan makan dipakailah combineReducers
+export default combineReducers({
+  HomeReducer
+})
+```
+jadi si reducer ini memberikan respone aaction yang di kirim ke store 
 itulah adalah perkenalan Tentangg redux. untuk bahan-bahan yang dibutuh ada di list bawah.
 installation Redux
 > react-native init Redux
