@@ -1,19 +1,19 @@
 # Redux
-Redux adalah pustaka JavaScript open-source untuk mengelola state aplikasi. Sebelumnya apabila kita ingin membuat state, di file satu.js misalnya kita tidak akan bisa memanggil state tersebut ke file dua.js dengan nilai yang sama persis. hal ini dikarenakan state hanya bisa dilakukan di file itu sendiri. dengan adanya Redux Kita cuma membuat satu state tapi bisa di pangging di semua screen dengan value yang sama.
+Redux adalah pustaka JavaScript open-source untuk mengelola state aplikasi. Sebelumnya apabila kita ingin membuat state, di file satu.js misalnya kita tidak akan bisa memanggil state tersebut ke file dua.js dengan nilai yang sama persis. hal ini dikarenakan state hanya bisa dilakukan di file itu sendiri. dengan adanya Redux Kita cuma membuat satu state tapi bisa di panggil di semua screen dengan value yang sama.
 ## Kosnsep Redux
 Redux memiliki konsep yaitu state yang berada di setiap komponen akan dimasukkan ke dalam store menjadi satu. tinggal semua state yang didalam store akan dipanggil kembali ke setiap komponen-komponen yang memerlukan state tersebut.
 ## ![redux](https://user-images.githubusercontent.com/52732798/69915451-8d2b8e00-1481-11ea-986a-0ba681ef8299.png) 
-jadi direduc memiliki beberapa component diantarannya
+jadi di redux memiliki beberapa component diantarannya
 + action
 
-konsep action cukup Sederhana jadi action merupakan sebuah object yang memiliki property type. yang dimana object action ini nantinya akan dikirim ke Store dengan cara store.dispatch(ADD_DATA) , untuk kemudian nanti di olah oleh Reducer.
+konsep action cukup Sederhana jadi action merupakan sebuah object yang memiliki property type. yang dimana object action ini nantinya akan dikirim ke Store, untuk kemudian nanti di olah oleh Reducer.
 ```
 const changeUsername = {
     type: 'CHANGE_USERNAME',
     data: 'Pondok It'
 }
 ```
-untuk nama property nya bebas tapi kalo untuk type gak boleh diganti.
+Penjelasan : dari index.js yang kita buat tadi bisa terlihat bahwa action creator hanyalah fungsi yang mengembalikan nilai action. Action inilah yang akan di teruskan ke reducer untuk di olah oleh store.
 
 + Store
 
