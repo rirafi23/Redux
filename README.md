@@ -327,7 +327,7 @@ export const changeSekolahKantor = payload => {
 
 ```
 file ini digunakan untuk muatan informasi yang mengirim data dari aplikasi Anda ke store Anda.
-fungsi dari payload adalah parameter dari functionya.
+fungsi dari payload adalah parameter dari functionya itu sendiri.
 
 #### buat folder src/redux/reducer lalau buat file index.js
 ```
@@ -360,6 +360,7 @@ export default combineReducers({Reducer})`
 ```
 file ini adalah store nya, semua state yang dibutuhkan kita simpan disini.
 di file ini kita buat variabel dengan isi state. dan variabel untuk action untuk menampilak suatu data
+
 expor default combineReducers ini di gunakan untuk mengekpor variabel Reducer masing-masing sesui dengan state nya
 
 
@@ -370,9 +371,11 @@ screenInput.js
 ...
 + import { connect } from 'react-redux'
 + import {changeUsername, changeAlamat, changeHobby, changeSekolahKantor} from '../redux/action'
-
-		...
-
+	
+		
+	class Home extends React.Component{
+	    render(){
+		return(
                     <TextInput
                         style={styles.TextInput}
                         placeholder="username"
@@ -397,7 +400,10 @@ screenInput.js
                       + onChangeText={(text)=>this.props.changeSekolahKantor(text)}
                     />
                     
-		...
+		)
+	  }
+	}
+
 		    
 + const mapStateToProps = state =>{
     let {username, alamat, hobby, sekolah_kantor} = state.Reducer
@@ -413,20 +419,25 @@ screenHome.js
 import { connect } from 'react-redux'
 import {changeUsername, changeAlamat, changeHobby, changeSekolahKantor} from '../redux/action'
 
-	...
+   class Home extends React.Component{
+     render(){
+	return(
 		
               + <Text style={styles.TextBio}>usernam : {this.props.username}</Text>
               + <Text style={styles.TextBio}>alamat : {this.props.alamat}</Text>
               + <Text style={styles.TextBio}>hobby : {this.props.hobby}</Text>
               + <Text style={styles.TextBio}>asal sekolah atu kantor : {this.props.sekolah_kantor}</Text>
                
-	...
+	      )
+	}
+  }
+
 	
-const mapStateToProps = state =>{
++ const mapStateToProps = state =>{
     let {username, alamat, hobby, sekolah_kantor} = state.Reducer
     return {username, alamat, hobby, sekolah_kantor}
-}
-export default connect(mapStateToProps,{changeUsername, changeAlamat, changeHobby, changeSekolahKantor})(Home)
+  }
++ export default connect(mapStateToProps,{changeUsername, changeAlamat, changeHobby, changeSekolahKantor})(Home)
 ...
 ```
 disini kita menambahkan liblary react {connect} yang dimana di gunakan untuk menghubungkan dengan Redux, dan kita menmabhakan mapStateToProps yang di gunakan untuk menarik state objek reducer dari store global dan menempatkannya ke properti komponen
@@ -434,16 +445,20 @@ disini kita menambahkan liblary react {connect} yang dimana di gunakan untuk men
 app.js
 ```
 ...
-import {Provider} from 'react-redux'
-import {createStore, applyMiddleware} from 'redux'
-import Reducer from './src/redux/reducer/Reducer'
-import Thunk from 'redux-thunk'
++ import {Provider} from 'react-redux'
++ import {createStore, applyMiddleware} from 'redux'
++ import Reducer from './src/redux/reducer/Reducer'
++ import Thunk from 'redux-thunk'
 
-...
-      //membuat stote Reducer dan memperluas komunikasi secara asynchronous dengan API eksternal untuk mengambil atau save data
-    + <Provider store={createStore(Reducer,{},applyMiddleware(Thunk))}>
-      <Route/>
-    + </Provider>
-...
+class Home extends React.Component{
+ render(){
+    return(
+      //membuat stote Reducer dan memperluas komunikasi secara asynchronous dengan API eksternal untuk mengambil atau save 	data
+	    + <Provider store={createStore(Reducer,{},applyMiddleware(Thunk))}>
+	      <Route/>
+	    + </Provider>
+	)
+    }
+}
 ```
 silahkan kalian coba dan ulangi dan pahami alurnya tampa copy paste sebnayak 7X pasti nanti anda bakal terbiasa 
