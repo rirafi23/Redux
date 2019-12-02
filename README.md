@@ -88,7 +88,7 @@ itulah adalah perkenalan Tentangg redux. untuk bahan-bahan yang dibutuh ada di l
 
 #### kita mulai dengan membuat folder src/screen lalau buat file 
 
-screenInput.js
+##### screenInput.js
 ```
 import React from 'react'
 import {View, ScrollView, Text, StyleSheet, TextInput, Dimensions, TouchableOpacity} from 'react-native'
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     }
 })
 ```
-screenTampil.js
+##### screenTampil.js
 ```
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
 
 hubungakan kedua screen dengan navigation di folder src/route
 
-index.js
+##### index.js
 ```
 import {createAppContainer} from 'react-navigation'
 import {createStackNavigator} from 'react-navigation-stack'
@@ -266,6 +266,7 @@ const Route = createStackNavigator({
 export default createAppContainer(Route)
 ``` 
 kita cobaa apakah navigation nya berjalan atau tidk dengan mengedit source code di file app.js
+##### app.js
 ```
 import React from 'react'
 import Route from './src/route/index'
@@ -280,7 +281,8 @@ class App extends React.Component{
 export default App;
 ```
 cobalah kalian react-native run-android 
-### sekarang kita mulai membuat Redux untuk kedua screen tersebuta 
+sekarang kita mulai membuat Redux untuk kedua screen tersebuta 
+
 #### buatlah folder src/redux/type dengan file index.js
 ```
 export const CHANGE_USERNAME = "CHANGE_USERNAME"
@@ -288,7 +290,7 @@ export const CHANGE_ALAMAT = "CHANGE_ALAMAT"
 export const CHANGE_HOBBY = "CHANGE_HOBBY"
 export const CHANGE_SEKOLAH_KANTOR= "CHANGE_SEKOLAH_KANTOR"
 ````
-di file index.js kita export variabel yang dibutuhkan.
+file ini bisa di sebut sebagai Store dari si Rredux, Tempat yang digunakan menyimpan state aplikasimu. Hanya satu store saja yang wajib dimiliki dalam aplikasimu.
 
 #### buat folder src/redux/action lalau buat file index.js
 ```
@@ -358,15 +360,15 @@ const Reducer = (state = isState, action)=>{
 
 export default combineReducers({Reducer})`
 ```
-file ini adalah store nya, semua state yang dibutuhkan kita simpan disini.
-di file ini kita buat variabel dengan isi state. dan variabel untuk action untuk menampilak suatu data
 
-expor default combineReducers ini di gunakan untuk mengekpor variabel Reducer masing-masing sesui dengan state nya
+Pada contoh di atas, file action di gunakan untuk mengangkut informasi yang mengirimkan data dari aplikasimu  kepada store, Action hanya berbentuk javascript object pada umumnya. Dan membutuhkan properti bernama type untuk mengindikasikan hal yang akan terjadi (valuenya bebas) dan properti bernama apapun dan berapapun jumlahnya sesuai data yang akan dikirim ke store.
 
+Fungsi combineReducers mengambil beberapa fungsi reducer sebagai argumen dan berubah menjadi fungsi reducer tunggal.
+Kami menempatkan fungsi reducer sebagai penghitung untuk counterReducer dan nama untuk namesReducer.
 
 nah untuk folder Redux sudah selesai itu baru dasarnya doang masih ada lagi insyaAllah nanti saya akan perbaharui source code dengan secepatnya. lanjut ke folder screen kalian tinggal tambahin-tambahin aja seperti di bawah ini.
 
-screenInput.js
+##### screenInput.js
 ```
 ...
 + import { connect } from 'react-redux'
@@ -412,8 +414,12 @@ screenInput.js
 + export default connect(mapStateToProps,{changeUsername, changeAlamat, changeHobby, changeSekolahKantor})(Login)
 ...
 ```
+contoh di atas kita menambahkan 
++ import liblary dari react-redux yaitu connect() yang dimana connect bergunanya untuk menghubungkan react dengan store redux dan juga kita memanggil reducer 
++ lalu menambahkan onChangeext yang dimana value nya kita kirim di this.props (Prop umumnya digunakan untuk komunikasi data component dari parent komponent ke child component.)
++ dan menambahkan variabel mapStateToProps, Fungsi ini memilih bagian dari kondisi Redux dan meneruskannya sebagai props ke komponen yang terhubung. Itu berarti bahwa struktur state yang didapatkan komponen Anda, bukan struktur yang sama dengan state Redux.
 
-screenHome.js
+##### screenHome.js
 ```
 ...
 import { connect } from 'react-redux'
@@ -440,9 +446,12 @@ import {changeUsername, changeAlamat, changeHobby, changeSekolahKantor} from '..
 + export default connect(mapStateToProps,{changeUsername, changeAlamat, changeHobby, changeSekolahKantor})(Home)
 ...
 ```
-disini kita menambahkan liblary react {connect} yang dimana di gunakan untuk menghubungkan dengan Redux, dan kita menmabhakan mapStateToProps yang di gunakan untuk menarik state objek reducer dari store global dan menempatkannya ke properti komponen
+contoh di atas kita menambahkan 
++ import liblary dari react-redux yaitu connect() yang dimana connect bergunanya untuk menghubungkan react dengan store redux dan juga kita memanggil reducer 
++ lalu menambahkan this.props untuk memanggil value dari state yang ada di store (Prop umumnya digunakan untuk komunikasi data component dari parent komponent ke child component.)
++ dan menambahkan variabel mapStateToProps, Fungsi ini memilih bagian dari kondisi Redux dan meneruskannya sebagai props ke komponen yang terhubung. Itu berarti bahwa struktur state yang didapatkan komponen Anda, bukan struktur yang sama dengan state Redux. dan yang terakhir kita tambahkan di file app.js nya
 
-app.js
+##### app.js
 ```
 ...
 + import {Provider} from 'react-redux'
@@ -461,4 +470,10 @@ class Home extends React.Component{
     }
 }
 ```
-silahkan kalian coba dan ulangi dan pahami alurnya tampa copy paste sebnayak 7X pasti nanti anda bakal terbiasa 
+contoh diatas yang kita tambahkan adalah
++ import liblary Redux yaitu createStore yang digunakan untuk membuat store dan applyMiddleware yang digunakan sebagai memperluas Redux dengan fungsionalitas khusus.
++ import file Reducer
++ import Redux-thunk yang digunakan untuk berkomunikasi secara asynchronous dengan API eksternal untuk mengambil atau save data atau mengirim tindakan yang mengikuti siklus hidup permintaan ke API eksternal.
+
+
+## Budayakan BAKUL (baca, ketik, dan ulangi), Silahkan kalian coba dan ulangi dan pahami alurnya tampa copy paste sebnayak yang kamu mampu pasti nanti kamu bakal terbiasa dan Bisa.
